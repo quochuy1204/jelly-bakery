@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { GlobalState } from '../../../GlobalState'
 
 function Filter() {
@@ -6,13 +6,17 @@ function Filter() {
     const [categories] = state.categoriesAPI.categories
 
     const [category, setCategory] = state.productsAPI.category
+
     const [sort, setSort] = state.productsAPI.sort
-
-
 
     const handleCategory = e => {
         setCategory(e.target.value)
     }
+
+    useEffect(() => {
+        console.log(sort)
+    }, [sort])
+
 
     return (
         <div className="filter_menu">

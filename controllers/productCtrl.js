@@ -9,33 +9,38 @@ class APIfeatures {
     }
 
     filtering() {
-        //get the queryString from req.query
+        // Lấy ra tất cả giá trị của QueryString Object
         const queryObj = { ...this.queryString }
-        // console.log({ before: queryObj }) //before delete page
 
-        //create the list of excluded word
+        // Khởi tạo một array string có các giá trị page, sort, limit
         const excludedFileds = ['page', 'sort', 'limit']
 
-        //if any word exist in queryObj then delete it
+        // Tìm trong Object queryObj xem có property nào có name = page, sort và limit thì xóa các property đó đi
         excludedFileds.forEach(el => delete (queryObj[el]))
-        // console.log({ after: queryObj }) //after delete page
 
-        //convert the queryObject to queryString
+        // Chuyển Object queryObj sang dạng string
         let queryStr = JSON.stringify(queryObj)
 
-        //replace some particularly text in URL
+        // Tìm trong string queryStr xem có giá trị nào trùng với các từ gt, lt, gte, lte hay regex không,
+        // Nếu có thì thêm vào trước các từ đó dấu $
         queryStr = queryStr.replace(/gt|lt|gte|lte|regex/g, match => '$' + match)
 
+        // Gán cho hàm find() của Object Query một giá trị = với queryStr
         this.query.find(JSON.parse(queryStr))
 
         return this;
+
+        // SAU KHI CHẠY HÀM filtering() THÌ FILTER QUERY CHO HÀM find() SẼ CÓ GIÁ TRỊ
+        // category: '', title: {$regex: ''}
     }
 
     sorting() {
         //check if the sort query exist or not 
         if (this.queryString.sort) {
+
             //if the sort query exist then split the words between them and then join them together
-            const sortBy = this.queryString.sort.split(',').join(' ')
+            const sortBy = this.queryString.sort
+
             this.query = this.query.sort(sortBy)
         }
         else {
@@ -61,6 +66,8 @@ const productCtrl = {
                 .filtering()
                 .sorting()
                 .paginating()
+
+            console.log(features.filtering())
 
             //get all product from the database
             const products = await features.query //feateure.query will response the products

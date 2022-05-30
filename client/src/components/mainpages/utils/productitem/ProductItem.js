@@ -28,6 +28,7 @@ function ProductItem({ product, isAdmin, accesstoken }) {
     }
 
     return (
+        
         <div className="product_card">
             <div className="product_image">
                 <img src={product.images.url} alt="product images" />

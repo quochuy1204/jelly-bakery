@@ -39,6 +39,7 @@ function ProductsAPI() {
             setProducts(res.data.products)
 
             setResult(res.data.result)
+
         }
         getProducts()
     }, [callback, category, sort, page, search])

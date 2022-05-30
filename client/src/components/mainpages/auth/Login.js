@@ -33,7 +33,7 @@ function Login() {
                 <input type="password" name="password" required placeholder="Password" value={user.password} onChange={onChangeFunction} autoComplete="on" />
                 <div className="row">
                     <button type="submit">LOGIN</button>
-                    <Link to="/register">Sign In</Link>
+                    <Link to="/register">Sign Up</Link>
                 </div>
             </form>
         </div>
